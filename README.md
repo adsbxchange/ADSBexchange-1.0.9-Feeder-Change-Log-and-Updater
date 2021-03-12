@@ -9,7 +9,7 @@ ADSBexchange Pi feeder image release change log
 * Update script created to update services from ADSBx git repos
 * Updater script works on 1.0.9 release and up
 * Supports tar1090 update from git installer
-* Supports grapsh1090 upate from git installer
+* Supports graphs1090 upate from git installer
 
 ### Updated systemd services:
 
