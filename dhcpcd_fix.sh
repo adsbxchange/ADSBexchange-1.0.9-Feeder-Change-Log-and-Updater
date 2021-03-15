@@ -4,11 +4,8 @@ set -e
 # Rerun script again as root if executed as normal user the first time
 if [ $EUID -gt 0 ]
 then
-  echo "Script needs to run as root, spawning..."
-  sudo "$0"
-  exit  # THIS IS IMPORTANT!
-else
-  echo "Script is now running as root, continuing..."
+  echo "Script needs to run as root or sudo."
+  exit 
 fi
 
 FILE=/etc/systemd/system/dhcpcd.service.d/restart.conf
