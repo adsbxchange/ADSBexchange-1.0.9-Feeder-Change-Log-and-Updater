@@ -1,15 +1,20 @@
 #!/bin/bash
 set -e
 
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root or use sudo"
-  exit
+# Rerun script again as root if executed as normal user the first time
+if [ $EUID -gt 0 ]
+then
+  echo "Script needs to run as root, spawning..."
+  sudo "$0"
+  exit  # THIS IS IMPORTANT!
+else
+  echo "Script is now running as root, continuing..."
 fi
 
 FILE=/etc/systemd/system/dhcpcd.service.d/restart.conf
 if [[ -f "$FILE" ]]; then
 
-    echo "No updated needed."
+    echo "Seems like file exists. No updated likely needed."
 
 else
 
