@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 FILE=/etc/systemd/system/dhcpcd.service.d/restart.conf
 if [[ -f "$FILE" ]]; then
 
@@ -7,15 +13,15 @@ if [[ -f "$FILE" ]]; then
 
 else
 
-sudo mkdir -p /etc/systemd/system/dhcpcd.service.d
-sudo tee /etc/systemd/system/dhcpcd.service.d/restart.conf <<"EOF"
+mkdir -p /etc/systemd/system/dhcpcd.service.d
+tee /etc/systemd/system/dhcpcd.service.d/restart.conf <<"EOF"
 [Service]
 Restart=always
 RestartSec=5s
 StartLimitInterval=1
 StartLimitBurst=100
 EOF
-sudo systemctl daemon-reload
-sudo systemctl restart dhcpcd
+systemctl daemon-reload
+systemctl restart dhcpcd
 
 fi
